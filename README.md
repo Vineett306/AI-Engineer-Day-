@@ -4,7 +4,7 @@
 
 An MCP (Model Context Protocol) server that enables Codex and other AI agents to analyze GitHub repositories and generate accurate onboarding guides for new developers.
 
-Built for **OpenAI Hackathon 2026 - Track 1: Agentic Software Engineering**
+Built for **Open AI Hackathon - Track 1: Agentic Software Engineering**
 
 ---
 
@@ -389,7 +389,7 @@ MIT License - Feel free to use and modify!
 
 ## 👥 Team
 
-Built by [Your Name] for OpenAI Hackathon 2026
+Built by Vineet Lal for OpenAI Hackathon 2026
 
 **Track**: Agentic Software Engineering with Codex
 **Focus**: Solving the "repo onboarding" pain point for developers
@@ -407,7 +407,7 @@ Built by [Your Name] for OpenAI Hackathon 2026
 
 ## 📞 Support
 
-Questions or issues? Open an issue on GitHub or contact [your email/discord]
+Questions or issues? Open an issue on GitHub or contact 
 
 ---
 
