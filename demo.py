@@ -19,7 +19,7 @@ from github_onboarding_mcp import (
 )
 
 
-async def demo_analyze_repository():
+async def demo_analyze_repository() -> bool:
     """Demo: Analyze a complete repository."""
     print("=" * 80)
     print("DEMO 1: Analyze Complete Repository (facebook/react)")
@@ -34,9 +34,10 @@ async def demo_analyze_repository():
     
     print(result)
     print("\n")
+    return not result.startswith("Error:")
 
 
-async def demo_get_setup_commands():
+async def demo_get_setup_commands() -> bool:
     """Demo: Extract setup commands only."""
     print("=" * 80)
     print("DEMO 2: Get Setup Commands (vercel/next.js)")
@@ -49,13 +50,24 @@ async def demo_get_setup_commands():
         response_format=ResponseFormat.JSON
     ))
     
-    # Pretty print JSON
-    data = json.loads(result)
-    print(json.dumps(data, indent=2))
-    print("\n")
+    if not result or result.startswith("Error:"):
+        print(result or "Error: No response received from server.")
+        return False
+    else:
+        try:
+            # Pretty print JSON
+            data = json.loads(result)
+            print(json.dumps(data, indent=2))
+            print("\n")
+            return True
+        except json.JSONDecodeError:
+            print("Error: Received a non-JSON response from server.")
+            print(result)
+            print("\n")
+            return False
 
 
-async def demo_identify_danger_zones():
+async def demo_identify_danger_zones() -> bool:
     """Demo: Identify risky code areas."""
     print("=" * 80)
     print("DEMO 3: Identify Danger Zones (example repo)")
@@ -71,9 +83,10 @@ async def demo_identify_danger_zones():
     
     print(result)
     print("\n")
+    return not result.startswith("Error:")
 
 
-async def demo_json_output():
+async def demo_json_output() -> bool:
     """Demo: Get JSON output for programmatic use."""
     print("=" * 80)
     print("DEMO 4: JSON Output Format (psf/requests)")
@@ -86,13 +99,24 @@ async def demo_json_output():
         response_format=ResponseFormat.JSON
     ))
     
-    # Pretty print JSON
-    data = json.loads(result)
-    print(json.dumps(data, indent=2))
-    print("\n")
+    if not result or result.startswith("Error:"):
+        print(result or "Error: No response received from server.")
+        return False
+    else:
+        try:
+            # Pretty print JSON
+            data = json.loads(result)
+            print(json.dumps(data, indent=2))
+            print("\n")
+            return True
+        except json.JSONDecodeError:
+            print("Error: Received a non-JSON response from server.")
+            print(result)
+            print("\n")
+            return False
 
 
-async def demo_error_handling():
+async def demo_error_handling() -> bool:
     """Demo: Error handling for non-existent repo."""
     print("=" * 80)
     print("DEMO 5: Error Handling (non-existent repo)")
@@ -107,6 +131,7 @@ async def demo_error_handling():
     
     print(result)
     print("\n")
+    return result.startswith("Error:")
 
 
 async def main():
@@ -122,21 +147,22 @@ async def main():
     
     try:
         # Run demos sequentially
-        await demo_analyze_repository()
-        
-        await demo_get_setup_commands()
-        
-        await demo_identify_danger_zones()
-        
-        await demo_json_output()
-        
-        await demo_error_handling()
+        results = [
+            await demo_analyze_repository(),
+            await demo_get_setup_commands(),
+            await demo_identify_danger_zones(),
+            await demo_json_output(),
+            await demo_error_handling(),
+        ]
         
         print("=" * 80)
         print("DEMO COMPLETE!")
         print("=" * 80)
         print("\nAll demos executed successfully.")
-        print("The MCP server is working correctly and ready for use with Codex!")
+        if all(results):
+            print("The MCP server is working correctly and ready for use with Codex!")
+        else:
+            print("One or more demos reported errors. Check your network access and GitHub API connectivity.")
         print("\nNext steps:")
         print("1. Configure Codex to use this MCP server")
         print("2. Test with: codex chat --mcp github-onboarding")

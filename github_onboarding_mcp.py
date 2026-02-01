@@ -59,7 +59,7 @@ async def fetch_github_file(owner: str, repo: str, path: str, branch: str = "mai
     url = f"{GITHUB_API_BASE}/repos/{owner}/{repo}/contents/{path}"
     params = {"ref": branch}
     
-    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT, trust_env=False) as client:
         try:
             response = await client.get(url, params=params, headers=get_github_headers())
             if response.status_code == 404:
@@ -74,6 +74,8 @@ async def fetch_github_file(owner: str, repo: str, path: str, branch: str = "mai
             if e.response.status_code == 404:
                 return None
             raise
+        except httpx.RequestError:
+            raise
         except Exception:
             return None
 
@@ -82,7 +84,7 @@ async def fetch_repo_info(owner: str, repo: str) -> Dict[str, Any]:
     """Fetch basic repository information."""
     url = f"{GITHUB_API_BASE}/repos/{owner}/{repo}"
     
-    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT, trust_env=False) as client:
         try:
             response = await client.get(url, headers=get_github_headers())
             response.raise_for_status()
@@ -98,7 +100,7 @@ async def fetch_repo_tree(owner: str, repo: str, branch: str = "main") -> Option
     url = f"{GITHUB_API_BASE}/repos/{owner}/{repo}/git/trees/{branch}"
     params = {"recursive": "1"}
     
-    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT) as client:
+    async with httpx.AsyncClient(timeout=DEFAULT_TIMEOUT, trust_env=False) as client:
         try:
             response = await client.get(url, params=params, headers=get_github_headers())
             if response.status_code == 404:
@@ -107,6 +109,8 @@ async def fetch_repo_tree(owner: str, repo: str, branch: str = "main") -> Option
                 response = await client.get(url, params=params, headers=get_github_headers())
             response.raise_for_status()
             return response.json()
+        except httpx.RequestError:
+            raise
         except Exception:
             return None
 
@@ -454,6 +458,8 @@ async def analyze_repository(params: AnalyzeRepoInput) -> str:
         elif e.response.status_code == 404:
             return f"Error: Repository {params.owner}/{params.repo} not found or is private."
         return f"Error: GitHub API request failed with status {e.response.status_code}"
+    except httpx.RequestError as e:
+        return f"Error: Unable to connect to GitHub API: {str(e)}"
     except Exception as e:
         return f"Error: Unexpected error occurred: {type(e).__name__}: {str(e)}"
 
@@ -554,6 +560,8 @@ async def get_setup_commands(params: GetSetupCommandsInput) -> str:
         else:
             return json.dumps(setup_commands, indent=2)
             
+    except httpx.RequestError as e:
+        return f"Error: Unable to connect to GitHub API: {str(e)}"
     except Exception as e:
         return f"Error: Failed to extract setup commands: {type(e).__name__}: {str(e)}"
 
@@ -638,6 +646,8 @@ async def identify_danger_zones(params: IdentifyDangerZonesInput) -> str:
         else:
             return json.dumps(danger_files, indent=2)
             
+    except httpx.RequestError as e:
+        return f"Error: Unable to connect to GitHub API: {str(e)}"
     except Exception as e:
         return f"Error: Failed to identify danger zones: {type(e).__name__}: {str(e)}"
 
