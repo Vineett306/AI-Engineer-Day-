@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ChatGPT 6 UI</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">G6</div>
+          <div>
+            <p class="brand-title">ChatGPT 6</p>
+            <p class="brand-subtitle">Adaptive reasoning core</p>
+          </div>
+        </div>
+        <button class="primary">New session</button>
+        <div class="section">
+          <p class="section-title">Pinned</p>
+          <div class="session-card active">
+            <span>Launch brief</span>
+            <span class="time">Now</span>
+          </div>
+          <div class="session-card">
+            <span>Research sprint</span>
+            <span class="time">2h</span>
+          </div>
+          <div class="session-card">
+            <span>Design review</span>
+            <span class="time">Yesterday</span>
+          </div>
+        </div>
+        <div class="section">
+          <p class="section-title">Capabilities</p>
+          <div class="chip-row">
+            <span class="chip">Vision</span>
+            <span class="chip">Code</span>
+            <span class="chip">Audio</span>
+            <span class="chip">Memory</span>
+          </div>
+        </div>
+        <div class="profile">
+          <div class="avatar">A</div>
+          <div>
+            <p class="profile-name">Avery Chen</p>
+            <p class="profile-role">Product Strategy</p>
+          </div>
+        </div>
+      </aside>
+
+      <main class="chat">
+        <header class="chat-header">
+          <div>
+            <h1>ChatGPT 6 Console</h1>
+            <p>Orchestrate ideas, code, and research in one place.</p>
+          </div>
+          <div class="header-actions">
+            <button class="ghost">Share</button>
+            <button class="ghost">Export</button>
+            <button class="primary">Deploy</button>
+          </div>
+        </header>
+
+        <section class="chat-body">
+          <div class="message assistant">
+            <div class="badge">GPT-6</div>
+            <div class="bubble">
+              <h3>Welcome back, Avery.</h3>
+              <p>
+                I assembled the launch dashboard and captured the latest metrics. Want a quick
+                executive summary or a deeper analysis?
+              </p>
+              <div class="meta">
+                <span>Model: Helix</span>
+                <span>Latency: 180ms</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="message user">
+            <div class="bubble">
+              <p>
+                Give me the key wins, top risks, and a five-step plan for the next 48 hours.
+              </p>
+            </div>
+          </div>
+
+          <div class="message assistant">
+            <div class="badge">GPT-6</div>
+            <div class="bubble">
+              <div class="summary-grid">
+                <div>
+                  <h4>Key wins</h4>
+                  <ul>
+                    <li>Conversion up 18% vs. last week.</li>
+                    <li>Latency reduced by 32% across regions.</li>
+                    <li>New onboarding flow lifted retention.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Top risks</h4>
+                  <ul>
+                    <li>EU traffic spike may exceed budgeted compute.</li>
+                    <li>Partner API rate limits need escalation.</li>
+                    <li>Marketing assets require legal sign-off.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="plan">
+                <h4>Next 48 hours</h4>
+                <ol>
+                  <li>Lock EU scaling plan with SRE and finance.</li>
+                  <li>Trigger partner API quota increase.</li>
+                  <li>Finalize launch press kit approvals.</li>
+                  <li>Run 3 A/B tests on onboarding CTA.</li>
+                  <li>Publish live dashboard for execs.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer class="composer">
+          <div class="input-wrap">
+            <span class="spark">✦</span>
+            <input type="text" placeholder="Ask ChatGPT 6 anything..." />
+            <button class="send">Send</button>
+          </div>
+          <div class="composer-meta">
+            <span>Secure mode enabled</span>
+            <span>Auto-summarize on</span>
+          </div>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
